@@ -5,8 +5,6 @@
             get_template_part('template-parts/clase');
             ?>
         </section>
-        <aside>
-            <h2>Sidebar aquí</h2>
-        </aside>
+        <?php get_sidebar('clases'); ?>
     </main>
 <?php get_footer();?>
