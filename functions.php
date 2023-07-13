@@ -33,7 +33,8 @@ function gymtuc_scripts_styles()
     wp_enqueue_script('jquery');
     wp_enqueue_script('lightboxjs', get_template_directory_uri() . '/js/lightbox.min.js', array(), '2.11.3', true);
     wp_enqueue_script('swiper-js', 'https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js', array(), '10.0.4', true);
-    wp_enqueue_script('scripts', get_template_directory_uri() . '/js/scripts.js', array('swiper-js'), '1.0.0', true);
+    wp_enqueue_script('anime', 'https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js', array(), '2.0.2', true);
+    wp_enqueue_script('scripts', get_template_directory_uri() . '/js/scripts.js', array('swiper-js', 'anime'), '1.0.0', true);
 }
 add_action('wp_enqueue_scripts', 'gymtuc_scripts_styles');
 
@@ -77,3 +78,29 @@ function gymtuc_ubicacion_shortcode()
     echo do_shortcode('[contact-form-7 id="90" title="Formulario de contacto 1"]');
 }
 add_shortcode('gymtuc_ubicacion', 'gymtuc_ubicacion_shortcode');
+
+/** Imagenes dinamicas como BackGround */
+function gymtuc_hero_imagen()
+{
+    //Obtener el ID de la página
+    $front_id = get_option('page_on_front');
+
+    //Obtener la imagen
+    $id_imagen = get_field('hero_imagen', $front_id);
+    //Obtener la ruta de la imagen
+    $imagen = wp_get_attachment_image_src($id_imagen, 'full')[0];
+
+    //Crear CSS
+    wp_register_style('custom', false);
+    wp_enqueue_style('custom');
+
+    $imagen_destacada_css = "
+        body.home .header{
+            background-image : linear-gradient(rgb(0 0 0 / .75), rgb(0 0 0 / .75)), url($imagen);
+        }
+    ";
+
+    //Inyectar CSS
+    wp_add_inline_style('custom', $imagen_destacada_css);
+}
+add_action('init', 'gymtuc_hero_imagen');
