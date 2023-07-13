@@ -74,3 +74,35 @@ function gymtuc_instructores()
 <?php
 
 }
+
+function gymtuc_testimoniales()
+{
+?>
+    <ul class="listado-testimoniales swiper-wrapper">
+        <?php
+        $args = array(
+            'post_type' => 'testimoniales'
+        );
+        $testimoniales = new WP_Query($args);
+        while ($testimoniales->have_posts()) {
+            $testimoniales->the_post();
+        ?>
+            <li class="testimonial text-center swiper-slide">
+                <blockquote>
+                    <?php the_content();?>
+                </blockquote>
+                <footer class="testimonial-footer">
+                    <?php the_post_thumbnail('thumbnail'); ?>
+                    <p>
+                        <?php the_title(); ?>
+                    </p>
+                </footer>
+            </li>
+        <?php
+        }
+        wp_reset_postdata();
+        ?>
+    </ul>
+
+<?php
+}
