@@ -10,6 +10,13 @@
 
         ?>
     </ul>
+    <?php
+        //Paginacion usando Anterior-Siguiente
+        // posts_nav_link();
+        //Paginacion usando numeros además de Anterior-Siguiente
+        the_posts_pagination();
+
+    ?>
 </main>
 
 <?php get_footer(); ?>
